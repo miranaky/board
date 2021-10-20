@@ -105,7 +105,6 @@ Python 언어와 Django, Django Rest Framework 를 사용하여 구현하였습�
    Pipenv shell 혹은 가상환경이 활성화 되어 있는 상태로 실행합니다.
 
    ```bash
-   python manage.py makemigration
    python manage.py migrate
    ```
 
@@ -142,6 +141,66 @@ python manage.py localhost:8800
 
 # REST API
 
+## Create a new user
+
+> 새로운 계정 생성하기
+
+### Request
+
+`POST /api/v1/users/`
+
+> 데이터는 "username", "first_name","last_name","email","password"를 작성해서 보낸다.
+
+    curl -i -H 'Accept: application/json' -d 'username=kaengkaeng2&first_name=Sungmuk&last_name=Kang&email=kaengkaeng2@kaengkaeng.com&password=654321'  http://localhost:8800/api/v1/users/
+
+### Response
+
+    HTTP/1.1 201 Created
+    Date: Wed, 20 Oct 2021 14:46:39 GMT
+    Server: WSGIServer/0.2 CPython/3.9.6
+    Content-Type: application/json
+    Vary: Accept, Cookie
+    Allow: POST, OPTIONS
+    X-Frame-Options: DENY
+    Content-Length: 113
+    X-Content-Type-Options: nosniff
+    Referrer-Policy: same-origin
+
+    {"id":24,"username":"kaengkaeng2","first_name":"Sungmuk","last_name":"Kang","email":"kaengkaeng2@kaengkaeng.com"}
+
+---
+
+## Get token by login
+
+> 로그인 하고 jwt token 얻기  
+> X-JWT token은 게시글 생성,수정,삭제에 사용됩니다.
+
+### Request
+
+`POST /api/v1/users/login`
+
+> 데이터는 "username", "password"를 작성해서 보낸다.  
+> X-JWT Token을 받게된다.
+
+    curl -i -H 'Accept: application/json' -d 'username=kaengkaeng2&password=654321'  http://localhost:8800/api/v1/users/login
+
+### Response
+
+    HTTP/1.1 200 OK
+    Date: Wed, 20 Oct 2021 14:50:22 GMT
+    Server: WSGIServer/0.2 CPython/3.9.6
+    Content-Type: application/json
+    Vary: Accept, Cookie
+    Allow: OPTIONS, POST
+    X-Frame-Options: DENY
+    Content-Length: 105
+    X-Content-Type-Options: nosniff
+    Referrer-Policy: same-origin
+
+    {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwayI6MjR9.BM1dUlV1apYiIqKPwtjWF5QAapsKvlRwgQ1h8dWW28o"}
+
+---
+
 ## Get list of posts
 
 > 게시물 목록 가져오기  
@@ -152,7 +211,7 @@ python manage.py localhost:8800
 
 `GET /api/v1/posts/`
 
-    curl -i -H 'Accept: applicatino/json' http://localhost:8800/api/v1/posts/
+    curl -i -H 'Accept: application/json' http://localhost:8800/api/v1/posts/
 
 ### Response
 
@@ -210,6 +269,7 @@ python manage.py localhost:8800
 `POST /api/v1/posts/`
 
 > Header 에 Authorization: X-JWT {TOKEN} 을 추가해서 보낸다.  
+> {TOKEN} 은 [Get token by login](#get-token-by-login) 에서 받은 값을 사용.  
 > 데이터는"title"과 "content"를 작성해서 보낸다.
 
     curl -i -H 'Accept: application/json' -H 'Authorization: X-JWT {TOKEN}' -d 'title=New Post with kaengkaeng&content=Content created by kaengkaeng'  http://localhost:8800/api/v1/posts/
@@ -436,65 +496,5 @@ python manage.py localhost:8800
     Content-Length: 0
     X-Content-Type-Options: nosniff
     Referrer-Policy: same-origin
-
----
-
-## Create a new user
-
-> 새로운 계정 생성하기
-
-### Request
-
-`POST /api/v1/users/`
-
-> 데이터는 "username", "first_name","last_name","email","password"를 작성해서 보낸다.
-
-    curl -i -H 'Accept: application/json' -d 'username=kaengkaeng2&first_name=Sungmuk&last_name=Kang&email=kaengkaeng2@kaengkaeng.com&password=654321'  http://localhost:8800/api/v1/users/
-
-### Response
-
-    HTTP/1.1 201 Created
-    Date: Wed, 20 Oct 2021 14:46:39 GMT
-    Server: WSGIServer/0.2 CPython/3.9.6
-    Content-Type: application/json
-    Vary: Accept, Cookie
-    Allow: POST, OPTIONS
-    X-Frame-Options: DENY
-    Content-Length: 113
-    X-Content-Type-Options: nosniff
-    Referrer-Policy: same-origin
-
-    {"id":24,"username":"kaengkaeng2","first_name":"Sungmuk","last_name":"Kang","email":"kaengkaeng2@kaengkaeng.com"}
-
----
-
-## Get token by login
-
-> 로그인 하고 jwt token 얻기  
-> X-JWT token은 게시글 생성,수정,삭제에 사용됩니다.
-
-### Request
-
-`POST /api/v1/users/login`
-
-> 데이터는 "username", "password"를 작성해서 보낸다.  
-> X-JWT Token을 받게된다.
-
-    curl -i -H 'Accept: application/json' -d 'username=kaengkaeng2&password=654321'  http://localhost:8800/api/v1/users/login
-
-### Response
-
-    HTTP/1.1 200 OK
-    Date: Wed, 20 Oct 2021 14:50:22 GMT
-    Server: WSGIServer/0.2 CPython/3.9.6
-    Content-Type: application/json
-    Vary: Accept, Cookie
-    Allow: OPTIONS, POST
-    X-Frame-Options: DENY
-    Content-Length: 105
-    X-Content-Type-Options: nosniff
-    Referrer-Policy: same-origin
-
-    {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwayI6MjR9.BM1dUlV1apYiIqKPwtjWF5QAapsKvlRwgQ1h8dWW28o"}
 
 ---

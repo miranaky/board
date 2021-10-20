@@ -9,7 +9,7 @@ djangorestframework = "*"
 markdown = "*"
 django-filter = "*"
 pyjwt = "*"
-django-seed = "*"
+django-seed = "==0.2.2"
 
 [dev-packages]
 black = "*"
