@@ -274,4 +274,8 @@ Temporary Items
 .history
 .ionide
 
+## api http request
+api.http
+
 # End of https://www.toptal.com/developers/gitignore/api/macos,visualstudiocode,linux,python,django
+
