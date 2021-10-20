@@ -8,7 +8,7 @@
 -i https://pypi.org/simple
 asgiref==3.4.1; python_version >= '3.6'
 django-filter==21.1
-django-seed==0.3.1
+django-seed==0.2.2
 django==3.2.8
 djangorestframework==3.12.4
 faker==9.5.0; python_version >= '3.6'
