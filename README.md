@@ -127,7 +127,7 @@ python manage.py localhost:8800
 
 ### 추가 사항
 
-테스트를 위해서 django-seed를 이용한 가짜 파일 생성 가능합니다.  
+실제 작동 테스트를 위해서 django-seed를 이용한 가짜 파일 생성 가능합니다.  
 다음 명령어를 통하여 가짜 계정 30개와 가짜 게시글 100 개를 생성합니다.  
 실행시에는 Pipenv shell 혹은 가상환경이 활성화 되어 있는 상태로 실행합니다.
 
@@ -138,6 +138,15 @@ python manage.py localhost:8800
     python manage.py post_seed
 
 ---
+
+## Unit Test
+
+Pytest 를 사용하여 models 와 views 를 테스트 할 수 있습니다.
+
+    # 일반적인 실행
+    pytest
+    # 진행상황 확인
+    pytest -vv
 
 # REST API
 
