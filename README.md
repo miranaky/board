@@ -145,8 +145,11 @@ Pytest 를 사용하여 models 와 views 를 테스트 할 수 있습니다.
 
     # 일반적인 실행
     pytest
+
     # 진행상황 확인
     pytest -vv
+
+---
 
 # REST API
 
